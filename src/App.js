@@ -1,20 +1,38 @@
 import "./App.css";
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 import { List } from "./List";
+import { Form } from "./Form";
+import { getAnimals } from "./const/animals"
 
-let count = 0
 function App() {
-  const [description, setDescription] = useState(0);
-  console.log(description)
-  const changeDescription = () => {
-    setDescription(`Click: ${++count}`)
+  const [tab, setTab] = useState("list");
+  const [animals, setAnimals] = useState([])
+
+  useEffect(() => {
+    console.log("useEffect")
+    fetchAnimals()
+  }, [])
+
+  const fetchAnimals = async () => {
+    const animals = await getAnimals()
+    setAnimals(animals)
+  }
+
+  const addAnimal = (animal) => {
+    setAnimals([...animals, animal])
+    setTab('list')
   }
 
   return (
     <div className="App">
-      <List className="List" title="Languages List" />
-      <button onClick={changeDescription}>Click!</button>
-      <p>{description}</p>
+      <header>
+        <ul>
+          <li onClick={() => setTab("list")}>List</li>
+          <li onClick={() => setTab("form")}>Form</li>
+        </ul>
+      </header>
+      <hr />
+      {tab === "list" ? <List className="List" animals={animals}/> : <Form className="Form" onAddAnimal={addAnimal} />}
     </div>
   );
 }
