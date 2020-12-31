@@ -1,4 +1,27 @@
+import styled from "styled-components";
 import { useState } from "react";
+import { Button } from "./components/button"
+import { TabBodyContainer } from "./components/tab-body-container"
+
+
+const Label = styled.label`
+  display: flex;
+  color: #757575;
+  font-size: 14px;
+  font-weight: bold;
+`
+const Input = styled.input`
+  border-radius: 3px;
+  padding: 4px 8px;
+  border 1px solid black;
+`
+const ButtonContainer = styled.div`
+  margin-top: 24px;
+`
+
+const FormButton = styled(Button)`
+  width: 120px;
+`
 
 export const Form = ({ onAddAnimal }) => {
   const [text, setText] = useState("");
@@ -9,16 +32,16 @@ export const Form = ({ onAddAnimal }) => {
   };
 
   return (
-    <div>
-      <h4>Add New Animal</h4>
+    <TabBodyContainer title="Add new animal">
       <form onSubmit={submitForm}>
         <div>
-          <input type="text" value={text} onChange={(e) => setText(e.target.value)} />
+        <Label>Animal</Label>
+          <Input type="text" value={text} onChange={(e) => setText(e.target.value)} />
         </div>
-        <div>
-          <button>Add</button>
-        </div>
+        <ButtonContainer>
+          <FormButton>Add</FormButton>
+        </ButtonContainer>
       </form>
-    </div>
+    </TabBodyContainer>
   );
 };
